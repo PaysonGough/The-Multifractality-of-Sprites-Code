@@ -17,6 +17,7 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1):
     shape = np.shape(arr)
     print("The image has shape", shape)
     
+    """
     if(len(shape) == 3):#flatten the array
         new_arr = np.zeros((shape[0], shape[1]))
         for i in range(shape[0]):
@@ -24,6 +25,7 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1):
                 for k in range(3):
                     new_arr[i, j] = new_arr[i, j] + arr[i, j, k]
         arr = new_arr
+    """
         
     min_pix, max_pix = arr[0,0], arr[0,0]
     for i in range(shape[0]):
@@ -47,12 +49,10 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1):
                 ys.append(-i)
                 ms.append(arr[i,j])
             else:
-                copy[i, j, 0] = 25
-                copy[i, j, 1] = 90
-                copy[i, j, 2] = 194
+                copy[i, j] = 2**16-1
     
     plt.figure()
-    plt.imshow(copy)
+    plt.imshow(copy, cmap = "gray")
     plt.title(title)
     
     print(len(xs), "pixels survived the thresher")

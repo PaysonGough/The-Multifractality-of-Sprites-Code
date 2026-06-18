@@ -16,8 +16,8 @@ def process_image():
     #filename = "sprite1.tif"
     filename = "sprite2.tif"
     
-    lo, hi = .001, 1
-    xs, ys, ms= tools.mass_fractalizer(filename, lo, hi)
+    lo, hi = .16, 1
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi)
     write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
     #write_filename = "tri_mass.txt"
     io.write_mass_fractal(write_filename, xs, ys, ms)
@@ -103,8 +103,8 @@ def main():
     #This is for playing around with thresholds and generating the data
     #process_image()
     #This calculates C_q(r) (very slow)
-    #process_points()
+    process_points()
     #This actually generates the spectrum (quick)
-    fitting()
+    #fitting()
 
 main()
