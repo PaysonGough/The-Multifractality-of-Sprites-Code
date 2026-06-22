@@ -8,7 +8,7 @@ def pythag(x1, y1, z1, x2, y2, z2):
     return math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1))
 
 #This removes returns a list of pointmasses brighter than the threshold
-def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1, trunc = 0):
+def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1, x_min = 0, x_max = -1, y_min = 0, y_max = -1, trunc = 0):
     title = filename[0:-4]+" "+str(100*lo_thresh)+"% to "+str(100*hi_thresh)+"% max brightness"
     
     arr = plt.imread(filename)
@@ -33,8 +33,8 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1, trunc = 0):
                arr[i,j] = arr[i, j]//(2**trunc)
         
     min_pix, max_pix = arr[0,0], arr[0,0]
-    for i in range(shape[0]):
-        for j in range(shape[1]):
+    for i in range(x_min, x_max):
+        for j in range(y_min, y_max):
             if arr[i,j] < min_pix:
                 min_pix = arr[i,j]
             if arr[i,j] > max_pix:
@@ -47,8 +47,8 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1, trunc = 0):
     hi_thresh = hi_thresh * max_pix
     
     xs, ys, ms = [], [], []
-    for i in range(shape[0]):
-        for j in range(shape[1]):
+    for i in range(x_min, x_max):
+        for j in range(y_min, y_max):
             if((arr[i, j] > lo_thresh) and (arr[i, j] <= hi_thresh)):
                 xs.append(j)
                 ys.append(-i)

@@ -12,19 +12,49 @@ def print_date_and_time():
     print(time.strftime("%H:%M:%S", t), d)
     
 def process_image():
-    #filename = "20-30-42_triangle.png"
-    #filename = "sprite1.tif"
-    filename = "sprite2.tif"
+    filename = "image15E.tif"
+    x_min, x_max = 0, 542
+    y_min, y_max = 0, 542
     
-    lo, hi = .16, 1
-    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, trunc = 4)
+    lo, hi = .11, 1
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, x_min, x_max, y_min, y_max, trunc = 4)
     write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
     #write_filename = "tri_mass.txt"
-    io.write_mass_fractal(write_filename, xs, ys, ms)
+    io.write_mass_fractal("sprite1_11p.txt", xs, ys, ms)
+    
+    #filename = "sprite1.tif"
+    #x_min, x_max = 0, 0
+    #y_min, y_max = 0, 0
+    
+    lo, hi = .12, 1
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, x_min, x_max, y_min, y_max, trunc = 4)
+    write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
+    #write_filename = "tri_mass.txt"
+    io.write_mass_fractal("sprite1_12p.txt", xs, ys, ms)
+    
+    filename = "image21E.tif"
+    x_min, x_max = 0, 652
+    y_min, y_max = 0, 652
+    
+    lo, hi = .14, 1
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, x_min, x_max, y_min, y_max, trunc = 4)
+    write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
+    #write_filename = "tri_mass.txt"
+    io.write_mass_fractal("sprite2_14p.txt", xs, ys, ms)
+    
+    #filename = "image21E.tif"
+    #x_min, x_max = 0, 652
+    #y_min, y_max = 0, 652
+    
+    lo, hi = .16, 1
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, x_min, x_max, y_min, y_max, trunc = 4)
+    write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
+    #write_filename = "tri_mass.txt"
+    io.write_mass_fractal("sprite2_16p.txt", xs, ys, ms)
     
 def process_points():
     
-    filenames = ["sprite1_0.11_1.txt", "sprite1_0.12_1.txt", "sprite2_0.14_1.txt", "sprite2_0.16_1.txt"]
+    filenames = ["sprite1_11p.txt", "sprite1_12p.txt", "sprite2_14p.txt", "sprite2_16p.txt"]
     #filenames = ["tri_mass.txt"]
     
     Qs = [Q/2 for Q in range(-30, 30+1)]
@@ -43,7 +73,7 @@ def process_points():
         lnCs = tools.Correlation_Integrator(xs, ys, zs, ms, Qs, Rs)
         lnRs = [math.log(R) for R in Rs]
         
-        write_filename = "HD_"+filename[0:-4] + "_lnC(q,r).txt"
+        write_filename = filename[0:-4] + "_lnC(q,r).txt"
         io.write_XY2file(write_filename, Qs, lnRs, lnCs)
         
     print_date_and_time()
