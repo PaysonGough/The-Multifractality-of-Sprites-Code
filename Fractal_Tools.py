@@ -8,7 +8,7 @@ def pythag(x1, y1, z1, x2, y2, z2):
     return math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1))
 
 #This removes returns a list of pointmasses brighter than the threshold
-def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1):
+def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1, trunc = 0):
     title = filename[0:-4]+" "+str(100*lo_thresh)+"% to "+str(100*hi_thresh)+"% max brightness"
     
     arr = plt.imread(filename)
@@ -26,6 +26,11 @@ def mass_fractalizer(filename, lo_thresh = .01, hi_thresh = 1):
                     new_arr[i, j] = new_arr[i, j] + arr[i, j, k]
         arr = new_arr
     """
+    
+    if(trunc > 0):
+        for i in range(shape[0]):
+            for j in range(shape[1]):
+               arr[i,j] = arr[i, j]//(2**trunc)
         
     min_pix, max_pix = arr[0,0], arr[0,0]
     for i in range(shape[0]):
@@ -146,6 +151,46 @@ def lin_reg(xs, ys):
         SStot += (y-Sy/N)*(y-Sy/N)
     r2 = 1 - SSres/SStot
     return m, b, r2
+
+def sloper(Xs, Yss, lower, upper, fit_C_range = True):
+    ms, bs = [], []
+    if(fit_C_range):
+        min_lo, max_hi = len(Yss[0])-1, 0
+        ms, bs = [], []
+        for i in range(len(Yss)):
+            Ys = Yss[i]
+            lower_ind, upper_ind = len(Ys)-1, 0
+            for j in range(len(Ys)):
+                c = math.exp(Ys[j])#this isn't true, is it? it is.
+                if(c >= lower and c <+ upper):# if c is in the range
+                    if(j < lower_ind):
+                        lower_ind = j #this will only trigger once
+                    if(j > upper_ind):
+                        upper_ind = j #This will trigger so many times
+            if(lower_ind < min_lo):
+                min_lo = lower_ind
+            if(upper_ind > max_hi):
+                max_hi = upper_ind
+            #print(Ys[lower_ind], Ys[upper_ind])
+            m, b, r2 = lin_reg(Xs[lower_ind:upper_ind], Ys[lower_ind:upper_ind])
+            
+            ms.append(m)
+            bs.append(b)
+    else:
+        lower_ind, upper_ind = len(Xs)-1, 0
+        for i in range(len(Xs)):
+            x = Xs[i]
+            if(x > lower and x < upper):
+                if i < lower_ind:
+                    lower_ind = i
+                if i > upper_ind:
+                    upper_ind = i
+        for i in range(len(Yss)):
+            Ys = Yss[i]
+            m, b, r2 = lin_reg(Xs[lower_ind:upper_ind], Ys[lower_ind:upper_ind])
+            ms.append(m)
+            bs.append(b)
+    return ms, bs
 
 def logistic(xs, L, k, a, b):
     return (L-b)/(1+np.exp(k*(xs-a)))+b

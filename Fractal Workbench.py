@@ -17,7 +17,7 @@ def process_image():
     filename = "sprite2.tif"
     
     lo, hi = .16, 1
-    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi)
+    xs, ys, ms = tools.mass_fractalizer(filename, lo, hi, trunc = 4)
     write_filename = filename[0:-4]+"_"+str(lo)+"_"+str(hi)+".txt"
     #write_filename = "tri_mass.txt"
     io.write_mass_fractal(write_filename, xs, ys, ms)
@@ -54,19 +54,19 @@ def fitting():
     swap = -1
 
     lower, upper = 2, 5
-    Qs, xs, yss = io.read_XY("sprite1_0.11_1_lnC(q,r).txt")
+    Qs, xs, yss = io.read_XY("HD_sprite1_0.11_1_lnC(q,r).txt")
     ms5, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)
     io.plot_L_fit_lines(Qs, ms5, paramss, xs, yss, upper, lower, title = 'A')
     
-    Qs, xs, yss = io.read_XY("sprite1_0.12_1_lnC(q,r).txt")
+    Qs, xs, yss = io.read_XY("HD_sprite1_0.12_1_lnC(q,r).txt")
     ms6, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)
     io.plot_L_fit_lines(Qs, ms6, paramss, xs, yss, upper, lower, title = 'C')
     
-    Qs, xs, yss = io.read_XY("sprite2_0.14_1_lnC(q,r).txt")
+    Qs, xs, yss = io.read_XY("HD_sprite2_0.14_1_lnC(q,r).txt")
     ms7, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)
     io.plot_L_fit_lines(Qs, ms7, paramss, xs, yss, upper, lower, title = 'B')
     
-    Qs, xs, yss = io.read_XY("sprite2_0.16_1_lnC(q,r).txt")
+    Qs, xs, yss = io.read_XY("HD_sprite2_0.16_1_lnC(q,r).txt")
     ms8, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)  
     io.plot_L_fit_lines(Qs, ms8, paramss, xs, yss, upper, lower, title = 'D')
     
