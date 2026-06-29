@@ -91,11 +91,11 @@ def fitting():
     
     Qs, xs, yss = io.read_XY("sprite1_12p_lnC(q,r).txt")
     ms6, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)
-    io.plot_L_fit_lines(Qs, ms6, paramss, xs, yss, upper, lower, title = 'B')
+    io.plot_L_fit_lines(Qs, ms6, paramss, xs, yss, upper, lower, title = 'C')
     
     Qs, xs, yss = io.read_XY("sprite2_14p_lnC(q,r).txt")
     ms7, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)
-    io.plot_L_fit_lines(Qs, ms7, paramss, xs, yss, upper, lower, title = 'C')
+    io.plot_L_fit_lines(Qs, ms7, paramss, xs, yss, upper, lower, title = 'B')
     
     Qs, xs, yss = io.read_XY("sprite2_16p_lnC(q,r).txt")
     ms8, paramss = tools.L_sloper(xs, yss, Qs, lower, upper, gen = gen_log, swap = swap)  
@@ -132,10 +132,10 @@ def fitting():
     
 def main():
     #This is for playing around with thresholds and generating the data
-    process_image()
+    #process_image()
     #This calculates C_q(r) (very slow)
     #process_points()
     #This actually generates the spectrum (quick)
-    #fitting()
+    fitting()
 
 main()
